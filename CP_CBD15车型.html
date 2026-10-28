@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CBD15 车型 AGV 控制计划（CP）</title>
+<style>
+* { box-sizing: border-box; }
+body { font-family: "Segoe UI", "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+  margin: 0; padding: 24px; background: #f4f6f9; color: #1f2933; }
+.wrap { max-width: 1400px; margin: 0 auto; }
+header { background: #fff; border-left: 6px solid #0b6e4f; padding: 14px 22px;
+  border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,.08); margin-bottom: 16px; }
+header h1 { margin: 0; font-size: 20px; color: #0b6e4f; }
+table { width: 100%; border-collapse: collapse; background: #fff;
+  border-radius: 8px; overflow: hidden; box-shadow: 0 1px 5px rgba(0,0,0,.1);
+  font-size: 12px; table-layout: fixed; }
+thead th { background: #0b6e4f; color: #fff; font-weight: 600; padding: 9px 6px;
+  text-align: center; border-right: 1px solid #2f8c6b; vertical-align: middle; word-break: break-all; }
+thead th:last-child { border-right: none; }
+tbody td { padding: 7px 7px; border-bottom: 1px solid #e4e9f0; border-right: 1px solid #eef1f6;
+  vertical-align: top; line-height: 1.5; word-break: break-word; }
+tbody td:last-child { border-right: none; }
+tbody tr:nth-child(even) { background: #fafbfd; }
+tbody tr:hover { background: #eef8f3; }
+.c-idx { text-align: center; color: #52606d; }
+.c-fm { font-weight: 600; color: #16324f; }
+.c-step { color: #0b6e4f; font-weight: 600; }
+.c-cls { text-align: center; }
+.cls-key { background: #d93025 !important; color: #fff; }
+.cls-imp { background: #f9ab00 !important; color: #3b2f00; }
+.c-num { text-align: center; }
+thead th.w-fm { width: 11%; }
+thead th.w-step { width: 8%; }
+thead th.w-cls { width: 5%; }
+thead th.w-num { width: 6%; }
+thead th.w-freq { width: 10%; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><h1>CBD15 车型 AGV 控制计划（CP）</h1></header>
+<table>
+<thead><tr><th style="width:4%;">序号</th><th class='w-fm'>对应失效模式</th><th class='w-step'>工序/过程步骤</th><th class=''>过程特性</th><th class='w-cls'>特性分类</th><th class=''>规格/要求</th><th class=''>评价/测量技术</th><th class='w-num'>样本量</th><th class='w-freq'>频率</th><th class=''>控制方法</th><th class=''>反应计划</th></tr></thead>
+<tbody>
+<tr><td class='c-idx'>1</td><td class='c-fm'>机器人控制权不在调度</td><td class='c-step'>开机 / 调度接管</td><td>机器人控制权归属</td><td class='c-cls cls-imp'>重要</td><td>控制权归属调度系统，无手动/维护占用</td><td>roboshopPro 调度端控制权状态确认</td><td class='c-num'>1 台/次</td><td class='c-num'>每班开机后、维护作业后</td><td>开机点检表；维护完成后归还调度并确认</td><td>通过 roboshopPro 归还控制权给调度；未恢复前该机不纳入派单</td></tr><tr><td class='c-idx'>2</td><td class='c-fm'>机器人状态不为“可接单”</td><td class='c-step'>开机 / 任务切换</td><td>机器人接单状态</td><td class='c-cls cls-imp'>重要</td><td>状态 = “可接单”</td><td>调度端机器人状态栏</td><td class='c-num'>1 台/次</td><td class='c-num'>每班开机后、手动结束任务后</td><td>开机点检；任务结束后恢复状态确认</td><td>通过 roboshopPro 修改状态为“可接单”</td></tr><tr><td class='c-idx'>3</td><td class='c-fm'>机器人定位不正确</td><td class='c-step'>开机 / 环境变更</td><td>机器人定位精度</td><td class='c-cls cls-imp'>重要</td><td>定位正确，误差在导航容差内</td><td>状态栏定位状态 / roboshopPro 定位检查</td><td class='c-num'>1 台/次</td><td class='c-num'>每班开机后、现场环境变更后</td><td>开机定位点检；环境变更后重定位</td><td>roboshopPro 重定位；地面打滑做防滑处理</td></tr><tr><td class='c-idx'>4</td><td class='c-fm'>调度数据与机器人不一致</td><td class='c-step'>地图变更 / 推送</td><td>调度-机器人地图版本一致性</td><td class='c-cls cls-imp'>重要</td><td>调度地图版本 = 机器人地图版本</td><td>调度状态栏实时反馈同步状态</td><td class='c-num'>全部在线机器人</td><td class='c-num'>每次地图推送后</td><td>地图变更 SOP；推送后版本核对清单</td><td>roboshopPro 重新推送地图；核对一致后方可上线</td></tr><tr><td class='c-idx'>5</td><td class='c-fm'>机器人电梯口报阻挡</td><td class='c-step'>过电梯</td><td>电梯口通行区畅通</td><td class='c-cls cls-imp'>重要</td><td>电梯口/轿厢内无人员、物料占用</td><td>机器人状态栏阻挡提示</td><td class='c-num'>1 台/次</td><td class='c-num'>每次过电梯前、运行中连续监控</td><td>专梯专用制度；梯口 5S 定置</td><td>人工移动障碍物；roboshopPro 手动操控避开</td></tr><tr><td class='c-idx'>6</td><td class='c-fm'>机器人电梯开门后不移动</td><td class='c-step'>过电梯</td><td>梯控到位信号</td><td class='c-cls cls-key'>关键</td><td>开门到位信号正常触发</td><td>梯控状态栏（无实时反馈）</td><td class='c-num'>1 台/次</td><td class='c-num'>每班点检、故障时排查</td><td>梯控系统点检；到位开关定期校准</td><td>roboshopPro 手动操控进出电梯；排查梯控状态/到位开关</td></tr><tr><td class='c-idx'>7</td><td class='c-fm'>机器人充电失败</td><td class='c-step'>充电</td><td>充电桩通讯</td><td class='c-cls cls-imp'>重要</td><td>充电桩通讯正常，充电流程完整</td><td>机器人状态栏充电状态</td><td class='c-num'>1 台/次</td><td class='c-num'>每班点检</td><td>充电桩定期点检</td><td>重启充电桩</td></tr><tr><td class='c-idx'>8</td><td class='c-fm'>机器人风淋室报阻挡</td><td class='c-step'>过风淋室</td><td>风淋室通道畅通</td><td class='c-cls cls-imp'>重要</td><td>风淋室内无障碍物料</td><td>无专项探测控制（依赖机器人状态栏阻挡提示）</td><td class='c-num'>1 台/次</td><td class='c-num'>运行中连续监控、交接高峰巡检</td><td>风淋室 5S 定置管理；物料交接及时完成</td><td>人工移动障碍物</td></tr><tr><td class='c-idx'>9</td><td class='c-fm'>自动门前不开门</td><td class='c-step'>过自动门</td><td>门控连接/功能</td><td class='c-cls cls-imp'>重要</td><td>门控信号正常，自动门响应</td><td>机器人状态栏 / 门控状态</td><td class='c-num'>1 台/次</td><td class='c-num'>每班点检</td><td>门控系统点检</td><td>roboshopPro 排查门状态</td></tr><tr><td class='c-idx'>10</td><td class='c-fm'>自动门开门后机器人不走</td><td class='c-step'>过自动门</td><td>开门到位信号</td><td class='c-cls cls-key'>关键</td><td>开门到位信号准确</td><td>门控状态栏（无实时反馈）</td><td class='c-num'>1 台/次</td><td class='c-num'>故障时排查</td><td>开门到位信号定期校验</td><td>roboshopPro 排查开门到位信号</td></tr><tr><td class='c-idx'>11</td><td class='c-fm'>机器人凭空报阻挡</td><td class='c-step'>运行</td><td>激光雷达清洁度</td><td class='c-cls cls-imp'>重要</td><td>激光头无灰尘污染</td><td>状态栏阻挡位置 / 人工目视</td><td class='c-num'>1 台/次</td><td class='c-num'>每班清洁、定期点检</td><td>激光头无尘布清洁 SOP</td><td>无尘布擦拭激光头；roboshopPro 辅助排查阻挡位置</td></tr><tr><td class='c-idx'>12</td><td class='c-fm'>机器人插取物料失败</td><td class='c-step'>库位作业（插取物料）</td><td>识别参数 / 料架模型一致性 / 前置点</td><td class='c-cls cls-imp'>重要</td><td>“识前转向”参数正确；托盘/料架与库位预设模型一致；前置点位置合适</td><td>识别超时报错 + 点检</td><td class='c-num'>首件/1 次</td><td class='c-num'>每班首件、料架变更后</td><td>料架与预设模型一致性首件确认；库位划线 5S</td><td>检查模型一致性；缩窄库位划线；调整“识前转向”参数；调整前置点距离；更新识别模型</td></tr>
+</tbody>
+</table>
+</div>
+</body>
+</html>
